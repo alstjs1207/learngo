@@ -30,4 +30,15 @@ func main() {
 	learn.WhatMaps()
 	//#11.
 	learn.WhatStructs()
+	//Gorutines
+	c := make(chan string) //main과 Goroutine 사이의 통신을 위한 channel 만들기
+	people := [5]string{"ms", "hana", "star", "nico", "sun"}
+
+	for _, person := range people {
+		go learn.GoroutineTest(person, c) //go를 작성하여 Goroutines 만들기
+	}
+	for index, _ := range people {
+		fmt.Println("waiting for ", index)
+		fmt.Println("name is ", <-c) //생성된 message 만큼 만들기, 값을 전달 받을 때까지 main 함수는 정지
+	}
 }
